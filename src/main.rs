@@ -253,7 +253,7 @@ fn draw_about(t: &mut Terminal<RawBackend>, area: &Rect) {
                 .wrap(true)
                 .text("\nI am a Software Developer, Technical Writer,\n\
                        and Open-Source Enthusiast with experience building\n\
-                       meweb applications. \n\n\
+                       web applications. \n\n\
                        I am keen on community work and sharing knowledge and have\n\
                        a particular interest in backend and infrastructure projects.\n\n\
                        My non-technical interests include knitting, baking,\n\
