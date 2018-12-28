@@ -48,7 +48,7 @@ fn main() {
     let mut app = App {
         size: Rect::default(),
         tabs: MyTabs {
-            titles: vec!["Welcome", "Personal", "Skills", "Experience", "Studies", "Looking For"],
+            titles: vec!["Home", "About", "Skills", "Experience", "Education", "Projects", "Objective"],
             selection: 0,
         }
     };
@@ -116,18 +116,18 @@ fn draw(t: &mut Terminal<RawBackend>, app: &App) -> Result<(), io::Error> {
         .sizes(&[Size::Fixed(3), Size::Min(0)])
         .render(t, &app.size, |t, chunks| {
             Tabs::default()
-                .block(Block::default().borders(Borders::ALL).title("Tabs"))
+                .block(Block::default().borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan)).title("Sections").title_style(Style::default().fg(Color::Cyan)))
                 .titles(&app.tabs.titles)
-                .style(Style::default().fg(Color::Green))
+                .style(Style::default().fg(Color::Magenta))
                 .highlight_style(Style::default().fg(Color::Yellow))
                 .select(app.tabs.selection)
                 .render(t, &chunks[0]);
             match app.tabs.selection {
                 0 => {
-                    draw_welcome(t, &chunks[1]);
+                    draw_home(t, &chunks[1]);
                 }
                 1 => {
-                    draw_personal(t, &chunks[1]);
+                    draw_about(t, &chunks[1]);
                 }
                 2 => {
                     draw_skills(t, &chunks[1]);
@@ -139,7 +139,10 @@ fn draw(t: &mut Terminal<RawBackend>, app: &App) -> Result<(), io::Error> {
                     draw_education(t, &chunks[1]);
                 }
                 5 => {
-                    draw_looking_for(t, &chunks[1]);
+                    draw_projects(t, &chunks[1]);
+                }
+                6 => {
+                    draw_objective(t, &chunks[1]);
                 }
                 _ => {}
             };
@@ -148,7 +151,7 @@ fn draw(t: &mut Terminal<RawBackend>, app: &App) -> Result<(), io::Error> {
     Ok(())
 }
 
-fn draw_welcome(t: &mut Terminal<RawBackend>, area: &Rect) {
+fn draw_home(t: &mut Terminal<RawBackend>, area: &Rect) {
     Group::default()
         .direction(Direction::Vertical)
         .sizes(&[Size::Percent(10), Size::Percent(80), Size::Percent(10)])
@@ -159,21 +162,37 @@ fn draw_welcome(t: &mut Terminal<RawBackend>, area: &Rect) {
                 .render(t, &chunks[1], |t, chunks| {
                     Paragraph::default()
                     .block(Block::default()
-                        .borders(Borders::ALL)
-                        .title("Welcome to Oscar Forner's Curriculum Vitae")
-                        .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                        .title("DAISY TSANG'S RESUME")
+                        .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                     .wrap(true)
-                    .text("\nUse {mod=bold;fg=yellow ←}  and {mod=bold;fg=yellow →}  to move between the tabs.\n\n\
-                           Use {mod=bold;fg=yellow q} to exit the application.\n\n\
-                           I hope you like it!\n\n\
-                           {mod=bold;fg=yellow **Note:} Optimized resolution of the command line is 120x40 characters.{mod=bold;fg=yellow **}\
+                    .text("\nUse {mod=bold;fg=yellow ←}  and {mod=bold;fg=yellow →}  to navigate between the sections.\n\n\
+                           Type {mod=bold;fg=yellow q} to exit the application.\n\n\
+                                                    -----------------------------------------------
+                                                                    .'`. ,'`.
+                                                              .---./    u    \\,---.
+                                                           ___|    \\    |    /    |___
+                                                          \\    `.   \\   |   /   .'    /
+                                                           \\_    `.  \\  |  /  .'    _/
+                                                         .-' `-._  `.:::::::.'  _.-' `-.
+                                                         \\       `-;:::::::::;-'       /
+                                                          >~------~:::::::::::~------~<
+                                                         /      _.-;:::::::::;-._      \\
+                                                         `-._.-'   .`.::::::'.   `-._.-'
+                                                            /    .'  /  |  \\  `.    \\
+                                                           /___.'   /   |   \\   `.___\\
+                                                               |   /    |    \\    |
+                                                               `--'\\   .n.   /`---'
+                                                                    `.'   `.'          
+
                            ")
+                    .style(Style::default().fg(Color::LightMagenta))
                     .render(t, &chunks[1]);
                 });
         });
 }
 
-fn draw_personal(t: &mut Terminal<RawBackend>, area: &Rect) {
+fn draw_about(t: &mut Terminal<RawBackend>, area: &Rect) {
     Group::default()
         .direction(Direction::Vertical)
         .sizes(&[Size::Percent(40), Size::Percent(60)])
@@ -184,26 +203,28 @@ fn draw_personal(t: &mut Terminal<RawBackend>, area: &Rect) {
             .render(t, &chunks[0], |t, chunks| {
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                     .title("Information")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow Name:} Oscar Forner Martinez\n\n\
-                       {mod=bold;fg=yellow Date of Birth:} 24/03/1988\n\n\
-                       {mod=bold;fg=yellow Nationality:} Spanish\n\n\
-                       {mod=bold;fg=yellow Permanent Location:} London UK\n\n\
+                .text("\n{mod=bold;fg=yellow Name:} Daisy Tsang\n\n\
+                       {mod=bold;fg=yellow Nationality:} Canadian\n\n\
+                       {mod=bold;fg=yellow Currently based in:} Berlin, Germany\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[0]);
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                     .title("Languages")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow Spanish:} Native\n\n\
-                       {mod=bold;fg=yellow Catalan:} Native\n\n\
-                       {mod=bold;fg=yellow English:} Fluent\n\n\
+                .text("\n{mod=bold;fg=yellow English:} Native\n\n\
+                       {mod=bold;fg=yellow French:} Good Knowledge\n\n\
+                       {mod=bold;fg=yellow German:} Good Knowledge\n\n\
+                       {mod=bold;fg=yellow Cantonese:} Conversational\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[1]);
             });
             Group::default()
@@ -212,29 +233,33 @@ fn draw_personal(t: &mut Terminal<RawBackend>, area: &Rect) {
             .render(t, &chunks[1], |t, chunks| {
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                     .title("Contact")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow Email:} oscar.forner.martinez@gmail.com\n\n\
-                       {mod=bold;fg=yellow Phone:} +44 (0) 7596944383\n\n\
-                       {mod=bold;fg=yellow Website:} https://oscarforner.com/\n\n\
-                       {mod=bold;fg=yellow Twitter:} https://twitter.com/oscar_forner\n\n\
-                       {mod=bold;fg=yellow GitHub:} https://github.com/maitesin\n\n\
-                       {mod=bold;fg=yellow LinkedIn:} http://linkedin.com/in/oscarforner\n\n\
+                .text("\n{mod=bold;fg=yellow Email:} daisyts@gmx.com\n\n\
+                       {mod=bold;fg=yellow Phone:} +49 (0) 174 3886 933\n\n\
+                       {mod=bold;fg=yellow Website:} https://infoverload.ca/\n\n\
+                       {mod=bold;fg=yellow Twitter:} https://twitter.com/1nfoverload\n\n\
+                       {mod=bold;fg=yellow LinkedIn:} http://linkedin.com/in/daisyts\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[0]);
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                     .title("About me")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\nI am a Software Engineer interested in {mod=bold Systems Programming} like {mod=bold Compilers} and {mod=bold Operating Systems}.\n\n\
-                       I am a regular attendee of the {mod=bold C++}, {mod=bold Rust} and {mod=bold Go} MeetUps in London.\n\n\
-                       I play {mod=bold handball} for the {mod=bold Chelsea Team} in London.\n\n\
-                       I enjoy playing all sorts of {mod=bold board games}, like {mod=bold Magic the Gathering}, and {mod=bold videogames}.\n\n\
+                .text("\nI am a Software Developer, Technical Writer,\n\
+                       and Open-Source Enthusiast with experience building\n\
+                       meweb applications. \n\n\
+                       I am keen on community work and sharing knowledge and have\n\
+                       a particular interest in backend and infrastructure projects.\n\n\
+                       My non-technical interests include knitting, baking,\n\
+                       & learning new natural languages.\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[1]);
             });
         });
@@ -246,9 +271,9 @@ fn draw_skills(t: &mut Terminal<RawBackend>, area: &Rect) {
         .sizes(&[Size::Percent(60), Size::Percent(40)])
         .render(t, area, |t, chunks| {
             Block::default()
-                .borders(Borders::ALL)
+                .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                 .title("Programming Languages")
-                .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold))
+                .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
                 .render(t, &chunks[0]);
             Group::default()
                 .direction(Direction::Vertical)
@@ -256,64 +281,64 @@ fn draw_skills(t: &mut Terminal<RawBackend>, area: &Rect) {
                 .sizes(&[Size::Fixed(2),Size::Fixed(2),Size::Fixed(2),Size::Fixed(2),Size::Fixed(2),Size::Fixed(2),Size::Fixed(2)])
                 .render(t, &chunks[0], |t, chunks| {
                 Gauge::default()
-                    .block(Block::default().title("C++ (11/14/17):").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                    .style(Style::default()
-                            .fg(Color::Magenta)
-                            .bg(Color::Black)
-                            .modifier(Modifier::Italic))
-                    .label(&format!("90 / 100"))
-                    .percent(90)
-                    .render(t, &chunks[0]);
-                Gauge::default()
-                    .block(Block::default().title("C:").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                    .style(Style::default()
-                            .fg(Color::Magenta)
-                            .bg(Color::Black)
-                            .modifier(Modifier::Italic))
-                    .label(&format!("80 / 100"))
-                    .percent(80)
-                    .render(t, &chunks[1]);
-                Gauge::default()
-                    .block(Block::default().title("Python:").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                    .style(Style::default()
-                            .fg(Color::Magenta)
-                            .bg(Color::Black)
-                            .modifier(Modifier::Italic))
-                    .label(&format!("80 / 100"))
-                    .percent(80)
-                    .render(t, &chunks[2]);
-                Gauge::default()
-                    .block(Block::default().title("Bash:").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                    .style(Style::default()
-                            .fg(Color::Magenta)
-                            .bg(Color::Black)
-                            .modifier(Modifier::Italic))
-                    .label(&format!("75 / 100"))
-                    .percent(75)
-                    .render(t, &chunks[3]);
-                Gauge::default()
-                    .block(Block::default().title("Go:").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .block(Block::default().title("Go").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                     .style(Style::default()
                             .fg(Color::Magenta)
                             .bg(Color::Black)
                             .modifier(Modifier::Italic))
                     .label(&format!("70 / 100"))
-                    .percent(60)
-                    .render(t, &chunks[4]);
+                    .percent(70)
+                    .render(t, &chunks[0]);
                 Gauge::default()
-                    .block(Block::default().title("Rust:").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .block(Block::default().title("JavaScript").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                     .style(Style::default()
                             .fg(Color::Magenta)
                             .bg(Color::Black)
                             .modifier(Modifier::Italic))
-                    .label(&format!("50 / 100"))
-                    .percent(50)
+                    .label(&format!("70 / 100"))
+                    .percent(70)
+                    .render(t, &chunks[1]);
+                Gauge::default()
+                    .block(Block::default().title("PHP").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .style(Style::default()
+                            .fg(Color::Magenta)
+                            .bg(Color::Black)
+                            .modifier(Modifier::Italic))
+                    .label(&format!("70 / 100"))
+                    .percent(70)
+                    .render(t, &chunks[2]);
+                Gauge::default()
+                    .block(Block::default().title("Ruby").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .style(Style::default()
+                            .fg(Color::Magenta)
+                            .bg(Color::Black)
+                            .modifier(Modifier::Italic))
+                    .label(&format!("60 / 100"))
+                    .percent(60)
+                    .render(t, &chunks[3]);
+                Gauge::default()
+                    .block(Block::default().title("Rust (learning)").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .style(Style::default()
+                            .fg(Color::Magenta)
+                            .bg(Color::Black)
+                            .modifier(Modifier::Italic))
+                    .label(&format!("40 / 100"))
+                    .percent(40)
+                    .render(t, &chunks[4]);
+                Gauge::default()
+                    .block(Block::default().title("Python (learning)").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .style(Style::default()
+                            .fg(Color::Magenta)
+                            .bg(Color::Black)
+                            .modifier(Modifier::Italic))
+                    .label(&format!("40 / 100"))
+                    .percent(40)
                     .render(t, &chunks[5]);
             });
             Block::default()
-                .borders(Borders::ALL)
+                .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                 .title("Others")
-                .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold))
+                .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
                 .render(t, &chunks[1]);
             Group::default()
                 .direction(Direction::Horizontal)
@@ -321,24 +346,29 @@ fn draw_skills(t: &mut Terminal<RawBackend>, area: &Rect) {
                 .sizes(&[Size::Fixed(15),Size::Fixed(2),Size::Fixed(24),Size::Fixed(2),Size::Fixed(25),Size::Fixed(2),Size::Fixed(15),Size::Fixed(2),Size::Fixed(16),Size::Fixed(2)])
                 .render(t, &chunks[1], |t, chunks| {
                     SelectableList::default()
-                        .block(Block::default().borders(Borders::ALL).title("Build Systems").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                        .items(&vec!["Make", "CMake", "Ninja", "Waf", "Meson", "Gradle"])
+                        .block(Block::default().borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan)).title("Frameworks").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .items(&vec!["Symfony", "Laravel", "Rails"])
+                        .style(Style::default().fg(Color::LightMagenta))
                         .render(t, &chunks[0]);
                     SelectableList::default()
-                        .block(Block::default().borders(Borders::ALL).title("Continuous Integration").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                        .items(&vec!["Gitlab CI", "Travis", "Jenkins"])
+                        .block(Block::default().borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan)).title("Technologies").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .items(&vec!["GNU / Linux", "OSX", "MySQL", "AJAX", "jQuery", "OOP", "MVC", "Wordpress", "Prometheus", "Docker"])
+                        .style(Style::default().fg(Color::LightMagenta))
                         .render(t, &chunks[2]);
                     SelectableList::default()
-                        .block(Block::default().borders(Borders::ALL).title("Static/Dynamic Analysis").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                        .items(&vec!["Clang-sanitizer", "Coverity", "Perf", "Valgrind"])
+                        .block(Block::default().borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan)).title("Areas").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .items(&vec!["Web Development", "Databases", "Software Engineering", "Monitoring", "Project Management"])
+                        .style(Style::default().fg(Color::LightMagenta))
                         .render(t, &chunks[4]);
                     SelectableList::default()
-                        .block(Block::default().borders(Borders::ALL).title("Unit Test").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                        .items(&vec!["Google Test", "Google Mock", "Unity", "FFF"])
+                        .block(Block::default().borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan)).title("Version Control").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .items(&vec!["Git", "Mercurial", "SVN"])
+                        .style(Style::default().fg(Color::LightMagenta))
                         .render(t, &chunks[6]);
                     SelectableList::default()
-                        .block(Block::default().borders(Borders::ALL).title("Tools").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                        .items(&vec!["Cling", "Clang-tidy", "Clang-format", "Ctags", "Cscope", "Mozilla rr"])
+                        .block(Block::default().borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan)).title("Task Tracking").title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .items(&vec!["JIRA", "AutoTask", "Trello", "Asana"])
+                        .style(Style::default().fg(Color::LightMagenta))
                         .render(t, &chunks[8]);
             });
     });
@@ -347,142 +377,262 @@ fn draw_skills(t: &mut Terminal<RawBackend>, area: &Rect) {
 fn draw_experience(t: &mut Terminal<RawBackend>, area: &Rect) {
     Group::default()
         .direction(Direction::Vertical)
-        .sizes(&[Size::Percent(30), Size::Percent(30),Size::Percent(20), Size::Percent(19),Size::Fixed(1)])
+        .sizes(&[Size::Percent(15), Size::Percent(15), Size::Percent(25),Size::Percent(25), Size::Percent(19),Size::Fixed(1)])
+
         .render(t, area, |t, chunks| {
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
-                    .title("2016 - Present: Software Engineer at VCA Technology")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("2018 - current: Freelancer, Self-Employed (remote)")
+                    .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow Network library:} Allows the user to interact with Boost ASIO through the std::stream interface.\n\n\
-                       {mod=bold;fg=yellow Tools:} Improve the toolchain used internally to allow the usage of clang-tidy for the linting of our code. Another tool allows to switch between several versions of the toolchain without having to change the environment.\n\n\
-                       {mod=bold;fg=yellow Backend development:} Several activities regarding the extension and implementation of new features in the backend of the product such as Authentication and GStreamer sinks.\n\n\
+                .text("\nPerform ongoing consultative and development work ranging from website maintenance/upgrades to business strategy and development.\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[0]);
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
-                    .title("2015 - 2016: Software Developer at Programming Research")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("2017 - current: Contributor, Fixate IO (remote)")
+                    .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow Static analysis of code:} Checks if the code has some patterns that have an undefined behaviour, unspecified in the Standard, and/or implementation-defined.\n\n\
-                       {mod=bold;fg=yellow Dataflow analysis of code:} Checks the complexity of methods, pointer problems, memory handling, etc.\n\n\
+                .text("\nGenerate in-depth technical content on an ongoing basis; Conduct market research and perform industry analysis;\n\n\
+                       Cover wide range of topics relating to software development, memory handling, etc.\n\n\
                        Took over two projects to refactor, maintain and add new features.\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[1]);
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
-                    .title("2013 - 2015: Software Engineer at European Bioinformatics Institute")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("2017 - 2017: Software Developer, Project A Services GmbH (Germany)")
+                    .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow RESTful service:} Allows  users to query for information about complexes in the database.\n\n\
-                       {mod=bold;fg=yellow Cluster algorithm:} Developed a new algorithm to cluster biological information from proteins.\n\n\
+                .text("\nSupported the backend development team by assisting them on various venture projects using Symfony and PHP; Collaborated \n\n\
+                        with Product Managers to foster and implement Agile practices; Analyzed an existing prototype application, refactored it\n\n\
+                        and added features, following the company's best practices and software development principles\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[2]);
                 Paragraph::default()
                 .block(Block::default()
-                    .borders(Borders::ALL)
-                    .title("2013 - Present: Open Source")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("2014 - 2015: Web Developer, eKomi Ltd (Germany)")
+                    .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow Prefix Tree Comparison:} Compare performance for different {mod=bold Trie}, {mod=bold Ternary Search Tree} and {mod=bold Radix Tree}.\n\n\
-                       {mod=bold;fg=yellow ARM C Compiler (ACC):} I am creating a {mod=bold self-hosting compiler} for {mod=bold C} in the {mod=bold ARM} architecture.\n\n\
+                .text("\nSupported IT team with both frontend and backend development and debugging tasks while working with large codebase;\n\n\
+                       Performed both client-facing work (designing customized, responsive review pages for clients) and internal tooling\n\n\
+                       for the rest of the team\n\n\
                       ")
+                .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[3]);
+                Paragraph::default()
+                .block(Block::default()
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("2011 - 2012: Software Developer, GrantStream Inc (Canada)")
+                    .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                .wrap(true)
+                .text("\nResponsible for a variety of development projects in grant management software including maintenance of PHP applications\n\n\
+                        and MS SQL Server and MySQL databases; Configured UI of customized Web applications with PHP, MSSQL, JavaScript, jQuery, CSS\n\n\
+                      ")
+                .style(Style::default().fg(Color::LightMagenta))
+                .render(t, &chunks[4]);
     });
 }
 
 fn draw_education(t: &mut Terminal<RawBackend>, area: &Rect) {
     Group::default()
         .direction(Direction::Vertical)
-        .sizes(&[Size::Percent(35), Size::Percent(65)])
+        .sizes(&[Size::Percent(45), Size::Percent(55)])
         .render(t, area, |t, chunks| {
                 Block::default()
-                    .borders(Borders::ALL)
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                     .title("Education")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold))
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
                     .render(t, &chunks[0]);
                 Group::default()
                     .direction(Direction::Vertical)
                     .margin(1)
-                    .sizes(&[Size::Percent(50), Size::Percent(50)])
+                    .sizes(&[Size::Percent(33), Size::Percent(33), Size::Percent(33)])
                     .render(t, &chunks[0], |t, chunks| {
                         Paragraph::default()
                         .block(Block::default()
-                            .borders(Borders::ALL)
-                            .title("2010 - 2013: Bachelor of Engineering in Computer Science")
+                            .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                            .title("University of Toronto: Certificate in Project Management (2010 - 2011)")
                             .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                         .wrap(true)
-                        .text("\nAdvanced Data Structures, Compilers and Interpreters, Advanced Operating Systems, and Distributed Systems.\n\n\
+                        .text("\nStudied foundations of project management and how to apply the most effective tools & techniques to achieve project objectives\n\n\
                             ")
+                        .style(Style::default().fg(Color::LightMagenta))
                         .render(t, &chunks[0]);
                         Paragraph::default()
                         .block(Block::default()
-                            .borders(Borders::ALL)
-                            .title("2006 - 2010: Associate Degree in Computer Science")
+                            .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                            .title("University of Western Ontario: Bachelor of Arts (2004 - 2009)")
                             .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                         .wrap(true)
-                        .text("\nOperating Systems, Real Time Operating Systems and Embedded Systems.\n\n\
+                        .text("\nObtained Double Major in Computer Science and Media Studies\n\n\
                             ")
+                        .style(Style::default().fg(Color::LightMagenta))
                         .render(t, &chunks[1]);
+                        Paragraph::default()
+                        .block(Block::default()
+                            .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                            .title("Stendhal University: Exchange Program (2008)")
+                            .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .wrap(true)
+                        .text("\nParticipated in Academic Exchange Program in Grenoble through the University of Western Ontario\n\n\
+                            ")
+                        .style(Style::default().fg(Color::LightMagenta))
+                        .render(t, &chunks[2]);
                 });
                 Block::default()
-                    .borders(Borders::ALL)
-                    .title("Courses")
-                    .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold))
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("Continuing Education")
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
                     .render(t, &chunks[1]);
                 Group::default()
                     .direction(Direction::Vertical)
                     .margin(1)
-                    .sizes(&[Size::Percent(20), Size::Percent(20),Size::Percent(20), Size::Percent(20),Size::Percent(20)])
+                    .sizes(&[Size::Percent(23), Size::Percent(23),Size::Percent(23), Size::Percent(31)])
                     .render(t, &chunks[1], |t, chunks| {
                     Paragraph::default()
                     .block(Block::default()
-                        .borders(Borders::ALL)
-                        .title("LFD331: Developing Linux Device Drivers (from Linux Foundation) - April 2016")
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                        .title("Getting Started with Continuous Delivery (2018)")
                         .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                     .wrap(true)
-                    .text("\nLearnt about the different Linux device drivers, APIs and methods through which devices interface with the kernel.")
+                    .text("\nO'Reilly Live Online Training Course")
+                    .style(Style::default().fg(Color::LightMagenta))
                     .render(t, &chunks[0]);
                     Paragraph::default()
                     .block(Block::default()
-                        .borders(Borders::ALL)
-                        .title("LFD320: Linux Kernel Internals and Debugging (from Linux Foundation) - March 2016")
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                        .title("Practical Kubernetes (2018)")
                         .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                     .wrap(true)
-                    .text("\nLearnt how Linux is architected, the basic methods for developing on the kernel, and how to work with the community.")
+                    .text("\nO'Reilly Live Online Training Course")
+                    .style(Style::default().fg(Color::LightMagenta))
                     .render(t, &chunks[1]);
                     Paragraph::default()
                     .block(Block::default()
-                        .borders(Borders::ALL)
-                        .title("Agile for Developers (from Accelebrate) - August 2015")
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                        .title("Bill Kennedy's Ultimate Go Workshop (2018)")
                         .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                     .wrap(true)
-                    .text("\nTeaches intermediate and advanced object-oriented developers the practices of Agile and Scrum.")
+                    .text("\nA weekend course designed to provide an intensive idiomatic view of Go")
+                    .style(Style::default().fg(Color::LightMagenta))
                     .render(t, &chunks[2]);
                     Paragraph::default()
                     .block(Block::default()
-                        .borders(Borders::ALL)
-                        .title("Algorithms, Part II (from Coursera) - November 2014")
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                        .title("Women Techmakers - JavaScript Crash Course (2017-2018)")
                         .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
                     .wrap(true)
-                    .text("\nFocuses on graph, and string processing algorithms.")
+                    .text("\nA 12-week lecture course designed to expose participants to multiple levels of the software development stack\n\
+                    with introductions to Node.js, Vue.js, MongoDB, Unit Testing, CI/CD, Design Patterns, Bridging APIs, and more")
+                    .style(Style::default().fg(Color::LightMagenta))
                     .render(t, &chunks[3]);
-                    Paragraph::default()
-                    .block(Block::default()
-                        .borders(Borders::ALL)
-                        .title("Algorithms, Part I (from Coursera) - September 2014")
-                        .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
-                    .wrap(true)
-                    .text("\nCovers elementary data structures, sorting, and searching algorithms.")
-                    .render(t, &chunks[4]);
                 });
     });
 }
 
-fn draw_looking_for(t: &mut Terminal<RawBackend>, area: &Rect) {
+fn draw_projects(t: &mut Terminal<RawBackend>, area: &Rect) {
+    Group::default()
+        .direction(Direction::Vertical)
+        .sizes(&[Size::Percent(50), Size::Percent(25), Size::Percent(25)])
+        .render(t, area, |t, chunks| {
+                Block::default()
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("Personal Projects")
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
+                    .render(t, &chunks[0]);
+                Group::default()
+                    .direction(Direction::Vertical)
+                    .margin(1)
+                    .sizes(&[Size::Percent(40), Size::Percent(40), Size::Percent(20)])
+                    .render(t, &chunks[0], |t, chunks| {
+                        Paragraph::default()
+                        .block(Block::default()
+                            .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                            .title("Observability in the Kitchen")
+                            .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .wrap(true)
+                        .text("\nThis project leverages sensors, open-source software, and Go to improve breadmaking and explores the relationship between\n\
+                        sourdough cultures, humidity, and temperature and how one can use systems monitoring tools to gain insight into an age-old tradition.\n\n\
+                            ")
+                        .style(Style::default().fg(Color::LightMagenta))
+                        .render(t, &chunks[0]);
+                        Paragraph::default()
+                        .block(Block::default()
+                            .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                            .title("Wortschatz Logger")
+                            .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .wrap(true)
+                        .text("\nWeb application aimed at helping people familiarize themselves with German articles through personal user accounts that allows\n\
+                        word tracking/categorizing and interactive quizzes. Built with PHP Laravel Framework, PostgreSQL, JavaScript, jQuery, SASS.\n\n\
+                            ")
+                        .style(Style::default().fg(Color::LightMagenta))
+                        .render(t, &chunks[1]);
+                        Paragraph::default()
+                        .block(Block::default()
+                            .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                            .title("Der Die Das Game")
+                            .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                        .wrap(true)
+                        .text("\nHTML5 browser game built with the Phaser.io framework and fully programmed in JavaScript. \n\n\
+                            ")
+                        .style(Style::default().fg(Color::LightMagenta))
+                        .render(t, &chunks[2]);
+                });
+                Block::default()
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("Volunteer Work")
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
+                    .render(t, &chunks[1]);
+                Group::default()
+                    .direction(Direction::Vertical)
+                    .margin(1)
+                    .sizes(&[Size::Percent(99)])
+                    .render(t, &chunks[1], |t, chunks| {
+                    Paragraph::default()
+                    .block(Block::default()
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                        .title("Rails Girls Berlin (2017 - current)")
+                        .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .wrap(true)
+                    .text("\nVolunteer as a coach for the Rails Girls Berlin Community, an organization aimed at mentoring and encouraging women\n\
+                    with no programming experience to learn the full programming stack and gain practical experience by building their\n\
+                    own Ruby on Rails app in a safe and welcoming space")
+                    .style(Style::default().fg(Color::LightMagenta))
+                    .render(t, &chunks[0]);
+                });
+                Block::default()
+                    .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                    .title("Open-Source Contributions")
+                    .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold))
+                    .render(t, &chunks[2]);
+                Group::default()
+                    .direction(Direction::Vertical)
+                    .margin(1)
+                    .sizes(&[Size::Percent(99)])
+                    .render(t, &chunks[2], |t, chunks| {
+                    Paragraph::default()
+                    .block(Block::default()
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
+                        .title("Prometheus (2017 - current)")
+                        .title_style(Style::default().fg(Color::Yellow).modifier(Modifier::Bold)))
+                    .wrap(true)
+                    .text("\nOngoing contributions to a systems monitoring toolkit written in Go: add new default metric go_info to Go client library;\n\
+                    document config options; add new features to command line utility; create custom node exporter for BME280 module; ...
+                     ")
+                    .style(Style::default().fg(Color::LightMagenta))
+                    .render(t, &chunks[0]);
+                });
+    });
+}
+
+fn draw_objective(t: &mut Terminal<RawBackend>, area: &Rect) {
     Group::default()
         .direction(Direction::Vertical)
         .sizes(&[Size::Percent(10), Size::Percent(80), Size::Percent(10)])
@@ -493,20 +643,23 @@ fn draw_looking_for(t: &mut Terminal<RawBackend>, area: &Rect) {
                 .render(t, &chunks[1], |t, chunks| {
                     Paragraph::default()
                     .block(Block::default()
-                        .borders(Borders::ALL)
+                        .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
                         .title("What I am looking for?")
-                        .title_style(Style::default().fg(Color::Green).modifier(Modifier::Bold)))
+                        .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                     .wrap(true)
-                    .text("\n{mod=bold;fg=yellow I am currently looking for new opportunities}\n\n\n\
-                           My ideal roles involve a combination of the following:\n\n\
-                           \t* Write low level libraries and/or components.\n\
-                           \t* Create and integrate APIs to expose and extend the functionality.\n\
-                           \t* Create and improve the tools used during the development.\n\
-                           \t* Work in the internals of Operating Systems such as GNU/Linux and FreeBSD.\n\
-                           \t* Work on compilers and/or interpreters and designing programming languages.\n\
-                           \t* Contribute to Open Source software.\n\
-                           \t* Design, develop and maintain a high performance and reliable system.\
+                    .text("\n{mod=bold;fg=yellow I am always open to be part of a team that does interesting work. :)}\n\n\n\
+                           My ideal role involves a combination of the following:\n\n\
+                           \t* Solve interesting backend and infrastructure problems\n\
+                           \t* Create and improve the tools used during the development\n\
+                           \t* Maintain a highly performant and reliable system\n\
+                           \t* Create and integrate APIs to expose and extend functionality\n\
+                           \t* Documentation\n\
+                           \t* Contribute to open source software\n\
+                           \t* Opportunities to attend and speak at conferences\n\
+                           \t* Maintain healthy work-life balance\n\
+                           \t* Receive and give mentorshop\
                            ")
+                    .style(Style::default().fg(Color::LightMagenta))
                     .render(t, &chunks[1]);
                 });
         });
