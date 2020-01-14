@@ -147,7 +147,7 @@ fn draw(t: &mut Terminal<RawBackend>, app: &App) -> Result<(), io::Error> {
                 _ => {}
             };
         });
-    try!(t.draw());
+    t.draw()?;
     Ok(())
 }
 
