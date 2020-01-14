@@ -1,4 +1,4 @@
-FROM rust:jessie
+FROM rust:1.31
 RUN rustup target add i686-unknown-linux-musl
 COPY src /src
 COPY Cargo.toml /
