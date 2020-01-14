@@ -163,7 +163,7 @@ fn draw_home(t: &mut Terminal<RawBackend>, area: &Rect) {
                     Paragraph::default()
                     .block(Block::default()
                         .borders(Borders::ALL).border_style(Style::default().fg(Color::Cyan))
-                        .title("DAISY TSANG'S RESUME")
+                        .title("DAISY T'S RESUME")
                         .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                     .wrap(true)
                     .text("\nUse {mod=bold;fg=yellow ←}  and {mod=bold;fg=yellow →}  to navigate between the sections.\n\n\
@@ -207,7 +207,7 @@ fn draw_about(t: &mut Terminal<RawBackend>, area: &Rect) {
                     .title("Information")
                     .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\n{mod=bold;fg=yellow Name:} Daisy Tsang\n\n\
+                .text("\n{mod=bold;fg=yellow Name:} Daisy T\n\n\
                        {mod=bold;fg=yellow Nationality:} Canadian\n\n\
                        {mod=bold;fg=yellow Currently based in:} Berlin, Germany\n\n\
                       ")
@@ -238,10 +238,11 @@ fn draw_about(t: &mut Terminal<RawBackend>, area: &Rect) {
                     .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                 .wrap(true)
                 .text("\n{mod=bold;fg=yellow Email:} daisyts@gmx.com\n\n\
-                       {mod=bold;fg=yellow Phone:} +49 (0) 174 3886 933\n\n\
+                       {mod=bold;fg=yellow Phone:} +49 (0) 176 3163 5400\n\n\
                        {mod=bold;fg=yellow Website:} https://infoverload.ca/\n\n\
                        {mod=bold;fg=yellow Twitter:} https://twitter.com/1nfoverload\n\n\
                        {mod=bold;fg=yellow LinkedIn:} http://linkedin.com/in/daisyts\n\n\
+                       {mod=bold;fg=yellow LinkedIn:} https://github.com/infoverload\n\n\
                       ")
                 .style(Style::default().fg(Color::LightMagenta))
                 .render(t, &chunks[0]);
@@ -251,7 +252,7 @@ fn draw_about(t: &mut Terminal<RawBackend>, area: &Rect) {
                     .title("About me")
                     .title_style(Style::default().fg(Color::Magenta).modifier(Modifier::Bold)))
                 .wrap(true)
-                .text("\nI am a Software Developer, Technical Writer,\n\
+                .text("\nI am a Software Developer, Technical Writer, Developer Advocate,\n\
                        and Open-Source Enthusiast with experience building\n\
                        web applications. \n\n\
                        I am keen on community work and sharing knowledge and have\n\
